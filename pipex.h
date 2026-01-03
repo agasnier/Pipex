@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:01:46 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/03 20:51:22 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/03 21:53:23 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,21 @@ typedef struct s_pipex
 	int		fd_out;
 	char	**path;
 	char	**cmd1;
+	char	*path_cmd1;
 	char	**cmd2;
+	char	*path_cmd2;
+
 }	t_pipex;
 
 
 //main.c
 
+
+
+//path.c
+void	get_env_path(t_pipex *pipex_data, char *envp[]);
+void	find_path(t_pipex *pipex_data);
+void	get_cmd_args(t_pipex *pipex_data, char *argv[]);
 
 //split.c
 char	**ft_split(char *str, char spliter);
