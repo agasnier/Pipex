@@ -6,39 +6,11 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:29:49 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/03 15:43:41 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/03 15:46:12 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-split_env_path(pipex_data, path)
-{
-
-}
-
-void	get_env_path(t_pipex *pipex_data, char *envp[])
-{
-	int		i;
-	char	*path;
-
-	i = 0;
-	path = NULL;
-	while (envp[i])
-	{
-		if (envp[i][0] == 'P' && envp[i][1] == 'A' &&
-			envp[i][2] == 'T' && envp[i][3] == 'H')
-		{
-			path = &envp[i][5];
-		}
-		i++;
-	}
-	if (path == NULL)
-	{
-		free_all(pipex_data, 1);
-	}
-	split_env_path(pipex_data, path);
-}
 
 void	open_fd(t_pipex *pipex_data, char *argv[])
 {

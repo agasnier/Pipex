@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 14:21:22 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/03 15:43:55 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/03 16:12:29 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ int	main(int argc, char *argv[], char *envp[])
 	check_args(argc);
 	open_fd(&pipex_data, argv);
 	get_env_path(&pipex_data, envp);
+
+	int i = 0;
+	while (pipex_data.path[i])
+	{
+		printf("%s\n\n", pipex_data.path[i]);
+		i++;
+	}
 
 	free_all(&pipex_data, 0);
 
