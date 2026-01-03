@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:45:52 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/03 16:13:49 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/03 17:37:34 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void split_env_path(t_pipex *pipex_data, char *path)
 	int	len_path;
 
 	nb_path = count_path(path);
-	printf("%d", nb_path);
 
 	env_path = malloc(sizeof(char *) * (nb_path + 1));
 	if (env_path == NULL)
@@ -65,7 +64,7 @@ static void split_env_path(t_pipex *pipex_data, char *path)
 	{
 		j = 0;
 		len_path = get_len_path(&path[k]);
-		env_path[i] = malloc(sizeof(char) * ( len_path + 1)); //gerer erreur
+		env_path[i] = malloc(sizeof(char) * ( len_path + 2)); //gerer erreur
 		while (path[k] != '\0' && path[k] != ':')
 		{
 			env_path[i][j] = path[k];
@@ -101,6 +100,5 @@ void	get_env_path(t_pipex *pipex_data, char *envp[])
 	{
 		free_all(pipex_data, 1);
 	}
-	printf("%s", path);
 	split_env_path(pipex_data, path);
 }

@@ -6,11 +6,45 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:29:49 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/03 15:46:12 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/03 17:40:24 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	len;
+	char	*t;
+	size_t	i;
+	size_t	j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	t = malloc(sizeof(char) * (len + 1));
+	if (!t)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[j])
+		t[i++] = s1[j++];
+	j = 0;
+	while (s2[j])
+		t[i++] = s2[j++];
+	t[i] = '\0';
+	return (t);
+}
 
 void	open_fd(t_pipex *pipex_data, char *argv[])
 {
