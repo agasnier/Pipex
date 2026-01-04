@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 14:21:22 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/04 16:46:40 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/04 18:22:18 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ int	main(int argc, char *argv[], char *envp[])
 	open_fd(&pipex_data, argv);
 
 	get_cmd_args(&pipex_data, argv);
-	printf("cmd1: %s cmd2: %s\n\n", pipex_data.cmds[0].cmd[0], pipex_data.cmds[1].cmd[0]);
+	printf("cmd1: %s cmd2: %s\n", pipex_data.cmds[0].cmd[0], pipex_data.cmds[1].cmd[0]);
 
 	get_env_path(&pipex_data, envp);
 	find_path(&pipex_data);
 
-	printf("path: %s\n", pipex_data.cmds[1].cmd[0]);
+	printf("path: %s\n\n", pipex_data.cmds[0].path);
 
 
 
