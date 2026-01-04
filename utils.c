@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:29:49 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/03 17:40:24 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/04 16:32:00 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,20 @@ void	free_all(t_pipex *pipex_data, int error)
 	close(pipex_data->fd_out);
 }
 
-void	check_args(int argc)
+void	check_args(t_pipex *pipex_data, int argc)
 {
 	if (argc != 5)
 	{
 		// write(2, "Error\n", 6);
 		// exit(1);
 	}
+
+	pipex_data->cmds = malloc(sizeof(t_cmd) * (argc - 3));
+	if (pipex_data->cmds == NULL)
+	{
+		write(2, "Error\n", 6);
+		exit(1);
+	}
+
+	pipex_data->argc = argc;
 }
