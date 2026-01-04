@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 14:21:22 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/04 18:22:18 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/04 18:59:10 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,32 +68,32 @@ int	main(int argc, char *argv[], char *envp[])
 
 	
 
-	// pid_t pid1 = fork();
-	// if (pid1 == -1)
-	// {
-	// 	write(2, "Error\n", 6); //error
-	// 	exit(1);
-	// }
-	// if (pid1 == 0)
-	// {
-	// 	child_exec(&pipex_data, pipex_data.path_cmd1, pipex_data.cmd1, pipex_data.fd_in, pipe_fd[1], pipe_fd[0], envp);
+	pid_t pid1 = fork();
+	if (pid1 == -1)
+	{
+		write(2, "Error\n", 6); //error
+		exit(1);
+	}
+	if (pid1 == 0)
+	{
+		child_exec(&pipex_data, pipex_data.cmds[0].path, pipex_data.cmds[0].cmd, pipex_data.fd_in, pipe_fd[1], pipe_fd[0], envp);
 
-	// }
-	// pid_t pid2 = fork();
-	// if (pid2 == -1)
-	// {
-	// 	write(2, "Error\n", 6); //error
-	// 	exit(1);
-	// }
-	// if (pid2 == 0)
-	// {
-	// 	child_exec(&pipex_data, pipex_data.path_cmd2, pipex_data.cmd2, pipe_fd[0], pipex_data.fd_out, pipe_fd[1], envp);
+	}
+	pid_t pid2 = fork();
+	if (pid2 == -1)
+	{
+		write(2, "Error\n", 6); //error
+		exit(1);
+	}
+	if (pid2 == 0)
+	{
+		child_exec(&pipex_data, pipex_data.cmds[1].path, pipex_data.cmds[1].cmd, pipe_fd[0], pipex_data.fd_out, pipe_fd[1], envp);
 
-	// }
-	// close(pipe_fd[0]);
-	// close(pipe_fd[1]);
-	// waitpid(pid1, NULL, 0);
-	// waitpid(pid2, NULL, 0);	
+	}
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);	
 
 
 
