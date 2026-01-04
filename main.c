@@ -6,15 +6,25 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 14:21:22 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/03 21:51:45 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/04 10:27:43 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+void	create_pipe(int *pipe_fd)
+{
+	if (pipe(pipe_fd) == -1)
+	{
+		write(2, "Error\n", 6);
+		exit(1);
+	}
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex	pipex_data;
+	int		pipe_fd[2];
 
 	check_args(argc);
 	open_fd(&pipex_data, argv);
@@ -30,7 +40,7 @@ int	main(int argc, char *argv[], char *envp[])
 		i++;
 	}
 	find_path(&pipex_data);
-	
+	create_pipe(pipe_fd);
 
 
 
