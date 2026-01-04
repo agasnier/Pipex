@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:51:26 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/03 21:51:57 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/04 11:27:42 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static char	*find_exec(char *cmd, char **path)
 		tmp2 = ft_strjoin(tmp, cmd); //free
 		if (access(tmp2, X_OK) == 0)
 		{
-			printf("\nPath find: %s\n", tmp2);
 			return (tmp2);
 		}
 		i++;

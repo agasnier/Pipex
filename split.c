@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 19:37:55 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/03 19:51:19 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/04 11:24:29 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,28 @@ static int	count_split(char *str, char spliter)
 char	**ft_split(char *str, char spliter)
 {
 	char	**result;
-	int		nb_tokens;
+	int		nb_split;
 	int		i;
 	int		j;
 	int		k;
-	int		token_len;
+	int		len_split;
 
 	if (!str)
 		return (NULL);
 
-	nb_tokens = count_split(str, spliter);
-	result = malloc(sizeof(char *) * (nb_tokens + 1));
+	nb_split = count_split(str, spliter);
+	result = malloc(sizeof(char *) * (nb_split + 1));
 	if (!result)
 		return (NULL);
-	result[nb_tokens] = NULL;
+	result[nb_split] = NULL;
 
 	i = 0;
 	k = 0;
-	while (i < nb_tokens)
+	while (i < nb_split)
 	{
 		j = 0;
-		token_len = get_len_split(&str[k], spliter);
-		result[i] = malloc(sizeof(char) * (token_len + 1)); //error
+		len_split = get_len_split(&str[k], spliter);
+		result[i] = malloc(sizeof(char) * (len_split + 1)); //error
 		while (str[k] != '\0' && str[k] != spliter)
 		{
 			result[i][j] = str[k];
