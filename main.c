@@ -6,34 +6,11 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 14:21:22 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 11:24:36 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 12:08:57 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void child_exec(t_pipex *pipex_data, char *path_cmd, char **cmd, int fd_in, int fd_out, int unused_fd, char **envp)
-{
-	if (dup2(fd_in, STDIN_FILENO) == -1)
-	{	
-		write(2, "Error\n", 6); //error
-		exit(1);
-	}
-	if (dup2(fd_out, STDOUT_FILENO) == -1)
-	{
-		write(2, "Error\n", 6); //error
-		exit(1);
-	}
-	close(fd_in);
-	close(fd_out);
-	close(unused_fd);
-
-	(void)pipex_data;
-
-	execve(path_cmd, cmd, envp);
-	write(2, "Error\n", 6); //error
-	exit(1);	
-}
 
 void	create_pipe(int *pipe_fd)
 {
@@ -44,10 +21,51 @@ void	create_pipe(int *pipe_fd)
 	}
 }
 
+void	child_exec(t_pipex *pipex_data)
+{
+	int	i;
+	int pipe[2];
+	int fd_in;
+
+	i = 0;
+	fd_in = pipex_data->fd_in;
+	while (i < pipex_data->nb_cmds)
+	{
+		if (i < pipex_data->nb_cmds)
+			create_pipe(pipe);
+
+		pipex_data->cmds[i].pid = fork();
+		if (pipex_data->cmds[i].pid == 0)
+		{
+			dup2(fd_in, STDIN_FILENO);
+			
+			if (i == pipex_data->nb_cmds - 1)
+				dup2(pipex_data->fd_out, STDOUT_FILENO);
+			else
+				dup2(pipe[1], STDOUT_FILENO);
+			if (i < pipex_data->nb_cmds - 1)
+				close(pipe[0]);
+			close(fd_in);
+			execve(pipex_data->cmds[i].path, pipex_data->cmds[i].cmd, pipex_data->envp);
+			exit(1);			
+		}
+		else
+		{
+			if (fd_in != pipex_data->fd_in)
+				close(pipe[1]);
+			if (i < pipex_data->nb_cmds - 1)
+			{
+				close(pipe[1]);
+				fd_in = pipe[0];
+			}
+		}
+		i++;	
+	}		
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex	pipex_data;
-	int		pipe_fd[2];
 
 	check_args(&pipex_data, argc, envp);
 	open_fd(&pipex_data, argv);
@@ -61,44 +79,14 @@ int	main(int argc, char *argv[], char *envp[])
 	printf("path: %s\n\n", pipex_data.cmds[0].path);
 
 
+	child_exec(&pipex_data);
 
-
-	create_pipe(pipe_fd);
-
-
-	
-
-	pid_t pid1 = fork();
-	if (pid1 == -1)
+	int	j = 0;
+	while(j < pipex_data.nb_cmds)
 	{
-		write(2, "Error\n", 6); //error
-		exit(1);
+		waitpid(pipex_data.cmds[j].pid, NULL, 0);
+		j++;
 	}
-	if (pid1 == 0)
-	{
-		child_exec(&pipex_data, pipex_data.cmds[0].path, pipex_data.cmds[0].cmd, pipex_data.fd_in, pipe_fd[1], pipe_fd[0], envp);
-
-	}
-	pid_t pid2 = fork();
-	if (pid2 == -1)
-	{
-		write(2, "Error\n", 6); //error
-		exit(1);
-	}
-	if (pid2 == 0)
-	{
-		child_exec(&pipex_data, pipex_data.cmds[1].path, pipex_data.cmds[1].cmd, pipe_fd[0], pipex_data.fd_out, pipe_fd[1], envp);
-
-	}
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);	
-
-
-
-
-
 
 	free_all(&pipex_data, 0);
 

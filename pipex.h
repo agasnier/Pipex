@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:01:46 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 11:24:54 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 11:36:11 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 typedef struct s_cmd
 {
+	pid_t	pid;
 	char	**cmd;
 	char	*path;
 

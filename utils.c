@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:29:49 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 11:25:15 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 12:11:48 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	open_fd(t_pipex *pipex_data, char *argv[])
 		exit(1);
 	}
 
-	pipex_data->fd_out = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	pipex_data->fd_out = open(argv[pipex_data->argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipex_data->fd_out < 0)
 	{
 		write(2, "Error\n", 6);
