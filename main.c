@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 14:21:22 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/04 18:59:10 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 11:24:36 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_pipex	pipex_data;
 	int		pipe_fd[2];
 
-	check_args(&pipex_data, argc);
+	check_args(&pipex_data, argc, envp);
 	open_fd(&pipex_data, argv);
 
 	get_cmd_args(&pipex_data, argv);

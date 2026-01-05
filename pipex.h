@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:01:46 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/04 19:00:25 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 11:24:54 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ typedef struct s_pipex
 	int		fd_in;
 	int		fd_out;
 	int		argc;
+	char	**envp;
 	char	**path;
-	// char	**cmd1;
-	// char	*path_cmd1;
-	// char	**cmd2;
-	// char	*path_cmd2;
+	int		nb_cmds;
 	t_cmd	*cmds;
 }	t_pipex;
 
@@ -59,6 +57,6 @@ size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	open_fd(t_pipex *pipex_data, char *argv[]);
 void	free_all(t_pipex *pipex_data, int error);
-void	check_args(t_pipex *pipex_data, int argc);
+void	check_args(t_pipex *pipex_data, int argc, char **envp);
 
 #endif
