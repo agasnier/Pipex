@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:10:34 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 17:13:48 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:23:00 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,12 @@ static void	child_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
 		dup2(pipex_data->fd_out, STDOUT_FILENO);
 	close(pipex_data->fd_in);
 	close(pipex_data->fd_out);
+	if (pipex_data->cmds[i].path == NULL)
+	{
+		free_all(pipex_data, 0);
+		ft_error(pipex_data, "Path command not found: may your function dosen't exist.\n");
+	}
 	execve(pipex_data->cmds[i].path, pipex_data->cmds[i].cmd, pipex_data->envp);
-	// if (pipex_data->cmds[cmds].path == NULL)
-	// 	ft_error(pipex_data, "Path command not found: may your function dosen't exist.");
 	exit(1);
 }
 
