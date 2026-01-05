@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:01:46 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 15:11:09 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:11:21 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <stdio.h>
 
 typedef struct s_cmd
 {
@@ -42,9 +43,9 @@ void	ft_waitpid(t_pipex *pipex_data);
 void	exec(t_pipex *pipex_data);
 
 //path.c
-void	get_env_path(t_pipex *pipex_data, char *envp[]);
 void	find_path(t_pipex *pipex_data);
 void	get_cmd_args(t_pipex *pipex_data, char *argv[]);
+void	get_env_path(t_pipex *pipex_data, char *envp[]);
 
 //split.c
 char	**ft_split(char *str, char spliter);
@@ -53,7 +54,10 @@ char	**ft_split(char *str, char spliter);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	open_fd(t_pipex *pipex_data, char *argv[]);
-void	free_all(t_pipex *pipex_data, int error);
 void	check_args(t_pipex *pipex_data, int argc, char **envp);
+
+//free.c
+void	ft_error(t_pipex *pipex_data, char *msg);
+void	free_all(t_pipex *pipex_data, int error);
 
 #endif

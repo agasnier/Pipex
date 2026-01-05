@@ -6,36 +6,13 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:51:26 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 15:03:33 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:12:21 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	get_env_path(t_pipex *pipex_data, char *envp[])
-{
-	int		i;
-	char	*path;
-
-	i = 0;
-	path = NULL;
-	while (envp[i])
-	{
-		if (envp[i][0] == 'P' && envp[i][1] == 'A' &&
-			envp[i][2] == 'T' && envp[i][3] == 'H')
-		{
-			path = &envp[i][5];
-		}
-		i++;
-	}
-	if (path == NULL)
-	{
-		free_all(pipex_data, 1);
-	}
-	pipex_data->path = ft_split(path, ':');
-}
-
-static char	*find_exec(char *cmd, char **path)
+static char	*find_exec(char *cmd, char **path) //error ok
 {
 	int		i;
 	char	*tmp;
@@ -44,18 +21,20 @@ static char	*find_exec(char *cmd, char **path)
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
 	i = 0;
-	while (path[i])
+	while (path && path[i])
 	{
 		tmp = ft_strjoin(path[i], "/");
 		tmp2 = ft_strjoin(tmp, cmd);
+		free(tmp);
 		if (access(tmp2, X_OK) == 0)
 			return (tmp2);
+		free(tmp2);
 		i++;
 	}
 	return (NULL);
 }
 
-void	find_path(t_pipex *pipex_data)
+void	find_path(t_pipex *pipex_data) //error ok
 {
 	int	arg;
 	int	cmds;
@@ -84,4 +63,25 @@ void	get_cmd_args(t_pipex *pipex_data, char *argv[])
 		cmds++;
 		arg++;
 	}
+}
+
+void	get_env_path(t_pipex *pipex_data, char *envp[])
+{
+	int		i;
+	char	*path;
+
+	i = 0;
+	path = NULL;
+	while (envp[i])
+	{
+		if (envp[i][0] == 'P' && envp[i][1] == 'A' &&
+			envp[i][2] == 'T' && envp[i][3] == 'H')
+		{
+			path = &envp[i][5];
+		}
+		i++;
+	}
+	if (path == NULL)
+		ft_error(pipex_data, "Envpath not found.\n");
+	pipex_data->path = ft_split(path, ':');
 }
