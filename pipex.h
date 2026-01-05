@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:01:46 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 17:11:21 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:42:11 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void	check_args(t_pipex *pipex_data, int argc, char **envp);
 
 //free.c
 void	ft_error(t_pipex *pipex_data, char *msg);
-void	free_all(t_pipex *pipex_data, int error);
+void	free_all(t_pipex *pipex_data);
 
 #endif

@@ -6,17 +6,17 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 17:10:30 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 17:11:28 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:42:19 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-
 void	ft_error(t_pipex *pipex_data, char *msg)
 {
 	(void)pipex_data;
 	write(2, msg, ft_strlen(msg));
+	free_all(pipex_data);
 	exit (1);
 }
 
@@ -35,12 +35,10 @@ void static	free_tab(char **tab)
 	free(tab);
 }
 
-void	free_all(t_pipex *pipex_data, int error)
+void	free_all(t_pipex *pipex_data)
 {
-	int i;
+	int	i;
 
-	if (error)
-		write(2, "error\n", 6);
 	if (pipex_data->path)
 	{
 		free_tab(pipex_data->path);

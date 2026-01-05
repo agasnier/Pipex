@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 19:37:55 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 15:10:25 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:52:47 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	count_split(char *str, char spliter)
 	return (count);
 }
 
-static void	write_split(char **result, int nb_split, char *str, char spliter)
+static int	write_split(char **result, int nb_split, char *str, char spliter) //supr 5lines
 {
 	int		i;
 	int		j;
@@ -54,6 +54,12 @@ static void	write_split(char **result, int nb_split, char *str, char spliter)
 		j = 0;
 		len_split = get_len_split(&str[k], spliter);
 		result[i] = malloc(sizeof(char) * (len_split + 1));
+		if (!result[i])
+		{
+			while (--i >= 0)
+				free(result[i]);
+			return (1);
+		}
 		while (str[k] != '\0' && str[k] != spliter)
 		{
 			result[i][j] = str[k];
@@ -65,6 +71,7 @@ static void	write_split(char **result, int nb_split, char *str, char spliter)
 			k++;
 		i++;
 	}
+	return (0);
 }
 
 char	**ft_split(char *str, char spliter)
@@ -79,6 +86,10 @@ char	**ft_split(char *str, char spliter)
 	if (!result)
 		return (NULL);
 	result[nb_split] = NULL;
-	write_split(result, nb_split, str, spliter);
+	if (write_split(result, nb_split, str, spliter))
+	{
+		free (result);
+		return (NULL);
+	}
 	return (result);
 }

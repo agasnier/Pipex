@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:51:26 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 17:12:21 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:48:13 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*find_exec(char *cmd, char **path) //error ok
 	return (NULL);
 }
 
-void	find_path(t_pipex *pipex_data) //error ok
+void	find_path(t_pipex *pipex_data)
 {
 	int	arg;
 	int	cmds;
@@ -60,6 +60,11 @@ void	get_cmd_args(t_pipex *pipex_data, char *argv[])
 	while (arg < pipex_data->argc - 1)
 	{
 		pipex_data->cmds[cmds].cmd = ft_split(argv[arg], ' ');
+		if (!pipex_data->cmds[cmds].cmd)
+		{
+			free_all(pipex_data);
+			ft_error(pipex_data, "Erreur parsing commands.\n");
+		}
 		cmds++;
 		arg++;
 	}
