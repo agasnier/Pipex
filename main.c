@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 14:21:22 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 12:18:59 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 12:20:33 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	child_exec(t_pipex *pipex_data)
 	fd_in = pipex_data->fd_in;
 	while (i < pipex_data->nb_cmds)
 	{
-		if (i < pipex_data->nb_cmds)
+		if (i < pipex_data->nb_cmds - 1)
 			create_pipe(pipe);
 
 		pipex_data->cmds[i].pid = fork();
