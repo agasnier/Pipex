@@ -1,0 +1,88 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/05 14:10:34 by algasnie          #+#    #+#             */
+/*   Updated: 2026/01/05 14:58:12 by algasnie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "pipex.h"
+
+void	ft_waitpid(t_pipex *pipex_data)
+{
+	int	i;
+
+	i = 0;
+	while (i < pipex_data->nb_cmds)
+	{
+		waitpid(pipex_data->cmds[i].pid, NULL, 0);
+		i++;
+	}
+}
+
+static void	create_pipe(int *pipe_fd)
+{
+	if (pipe(pipe_fd) == -1)
+	{
+		write(2, "Error\n", 6);
+		exit(1);
+	}
+}
+
+static void	child_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
+{
+	dup2(*fd_in, STDIN_FILENO);
+	close(*fd_in);
+	if (i < pipex_data->nb_cmds - 1)
+	{
+		dup2(pipe[1], STDOUT_FILENO);
+		close(pipe[0]);
+		close(pipe[1]);
+	}
+	else
+		dup2(pipex_data->fd_out, STDOUT_FILENO);
+	close(pipex_data->fd_in);
+	close(pipex_data->fd_out);
+	execve(pipex_data->cmds[i].path, pipex_data->cmds[i].cmd, pipex_data->envp);
+	exit(1);
+}
+
+static void	parent_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
+{
+	if (*fd_in != pipex_data->fd_in)
+		close(*fd_in);
+	if (i < pipex_data->nb_cmds - 1)
+	{
+		close(pipe[1]);
+		*fd_in = pipe[0];
+	}
+}
+
+void	exec(t_pipex *pipex_data)
+{
+	int	i;
+	int	pipe[2];
+	int	fd_in;
+
+	i = 0;
+	fd_in = pipex_data->fd_in;
+	while (i < pipex_data->nb_cmds)
+	{
+		if (i < pipex_data->nb_cmds - 1)
+			create_pipe(pipe);
+		pipex_data->cmds[i].pid = fork();
+		if (pipex_data->cmds[i].pid == 0)
+		{
+			child_process(pipex_data, pipe, &fd_in, i);
+		}
+		else
+		{
+			parent_process(pipex_data, pipe, &fd_in, i);
+		}
+		i++;
+	}
+}

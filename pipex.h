@@ -6,19 +6,17 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:01:46 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 11:36:11 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:11:09 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-#include <stdio.h>
-
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <sys/wait.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <sys/wait.h>
 
 typedef struct s_cmd
 {
@@ -39,11 +37,9 @@ typedef struct s_pipex
 	t_cmd	*cmds;
 }	t_pipex;
 
-
-
-//main.c
-
-
+//exec.c
+void	ft_waitpid(t_pipex *pipex_data);
+void	exec(t_pipex *pipex_data);
 
 //path.c
 void	get_env_path(t_pipex *pipex_data, char *envp[]);
