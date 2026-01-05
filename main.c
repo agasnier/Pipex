@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 14:21:22 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 12:08:57 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/05 12:18:59 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	child_exec(t_pipex *pipex_data)
 		else
 		{
 			if (fd_in != pipex_data->fd_in)
-				close(pipe[1]);
+				close(fd_in);
 			if (i < pipex_data->nb_cmds - 1)
 			{
 				close(pipe[1]);
