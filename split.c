@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 19:37:55 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 11:50:50 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 12:03:04 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,14 @@ static int	count_split(char *str, char spliter)
 	return (count);
 }
 
-static int	write_split(char **result, int nb_split, char *str, char spliter) //supr 5lines
+static int	write_split_helper(char **result, int i)
+{
+	while (--i >= 0)
+		free(result[i]);
+	return (1);
+}
+
+static int	write_split(char **result, int nb_split, char *str, char spliter)
 {
 	int		i;
 	int		j;
@@ -55,17 +62,9 @@ static int	write_split(char **result, int nb_split, char *str, char spliter) //s
 		len_split = get_len_split(&str[k], spliter);
 		result[i] = malloc(sizeof(char) * (len_split + 1));
 		if (!result[i])
-		{
-			while (--i >= 0)
-				free(result[i]);
-			return (1);
-		}
+			return (write_split_helper(result, i));
 		while (str[k] != '\0' && str[k] != spliter)
-		{
-			result[i][j] = str[k];
-			j++;
-			k++;
-		}
+			result[i][j++] = str[k++];
 		result[i][j] = '\0';
 		if (str[k] == spliter)
 			k++;
