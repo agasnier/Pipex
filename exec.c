@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:10:34 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 17:42:34 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 11:31:28 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,8 @@ static void	child_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
 		dup2(pipex_data->fd_out, STDOUT_FILENO);
 	close(pipex_data->fd_in);
 	close(pipex_data->fd_out);
-	if (pipex_data->cmds[i].path == NULL)
-	{
-		free_all(pipex_data);
-		ft_error(pipex_data,
-			"Path command not found: may your function dosen't exist.\n");
-	}
 	execve(pipex_data->cmds[i].path, pipex_data->cmds[i].cmd, pipex_data->envp);
+	free_all(pipex_data, 1, strerror(errno));
 	exit(1);
 }
 
@@ -71,7 +66,7 @@ void	exec(t_pipex *pipex_data)
 	{
 		if (i < pipex_data->nb_cmds - 1)
 			if (pipe(pipe_fd) == -1)
-				ft_error(pipex_data, "Error creating pipe for childs.");
+				free_all(pipex_data, 1, strerror(errno));
 		pipex_data->cmds[i].pid = fork();
 		if (pipex_data->cmds[i].pid == 0)
 			child_process(pipex_data, pipe_fd, &fd_in, i);

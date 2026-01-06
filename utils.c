@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:29:49 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 10:56:32 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 11:34:40 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ void	open_fd(t_pipex *pipex_data, char *argv[])
 {
 	pipex_data->fd_in = open(argv[1], O_RDONLY);
 	if (pipex_data->fd_in < 0)
-		ft_error(pipex_data, "Fail: Open(Infile).\n");
+		free_all(pipex_data, 1, strerror(errno));
 	pipex_data->fd_out = open(argv[pipex_data->argc - 1],
 			O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipex_data->fd_out < 0)
 	{
 		close(pipex_data->fd_in);
-		ft_error(pipex_data, "Fail: Open(Outfile).\n");
+		free_all(pipex_data, 1, strerror(errno));
 	}
 }
 
@@ -85,13 +85,13 @@ void	check_args(t_pipex *pipex_data, int argc, char **envp)
 	int	i;
 
 	if (argc != 5)
-		ft_error(pipex_data, "Number of arguments must be 5.\n");
+		free_all(pipex_data, 1, "Number of arguments must be 5.\n");
 	pipex_data->argc = argc;
 	pipex_data->nb_cmds = argc - 3;
 	pipex_data->envp = envp;
 	pipex_data->cmds = malloc(sizeof(t_cmd) * (pipex_data->nb_cmds));
 	if (pipex_data->cmds == NULL)
-		ft_error(pipex_data, "Fail: Creation tab of cmds.\n");
+		free_all(pipex_data, 1, "Fail: Creation tab of cmds.\n");
 	i = 0;
 	while (i < pipex_data->nb_cmds)
 	{

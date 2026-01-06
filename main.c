@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 14:21:22 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 10:57:31 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 11:26:05 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int	main(int argc, char *argv[], char *envp[])
 	find_path(&pipex_data);
 	exec(&pipex_data);
 	ft_waitpid(&pipex_data);
-	free_all(&pipex_data);
+	free_all(&pipex_data, 0, "");
 	return (0);
 }

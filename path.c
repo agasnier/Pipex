@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:51:26 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 17:48:13 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 11:25:56 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ void	get_cmd_args(t_pipex *pipex_data, char *argv[])
 	{
 		pipex_data->cmds[cmds].cmd = ft_split(argv[arg], ' ');
 		if (!pipex_data->cmds[cmds].cmd)
-		{
-			free_all(pipex_data);
-			ft_error(pipex_data, "Erreur parsing commands.\n");
-		}
+			free_all(pipex_data, 1, "Erreur parsing commands.\n");
 		cmds++;
 		arg++;
 	}
@@ -87,6 +84,6 @@ void	get_env_path(t_pipex *pipex_data, char *envp[])
 		i++;
 	}
 	if (path == NULL)
-		ft_error(pipex_data, "Envpath not found.\n");
+		free_all(pipex_data, 1, "Envpath not found.\n");
 	pipex_data->path = ft_split(path, ':');
 }

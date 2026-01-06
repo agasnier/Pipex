@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:01:46 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 10:51:01 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 11:35:19 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <sys/wait.h>
-# include <stdio.h>
+# include <errno.h>
+# include <string.h>
 
 typedef struct s_cmd
 {
@@ -58,7 +59,6 @@ void	open_fd(t_pipex *pipex_data, char *argv[]);
 void	check_args(t_pipex *pipex_data, int argc, char **envp);
 
 //free.c
-void	ft_error(t_pipex *pipex_data, char *msg);
-void	free_all(t_pipex *pipex_data);
+void	free_all(t_pipex *pipex_data, int exit, char *msg);
 
 #endif
