@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:01:46 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 15:33:26 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 16:11:35 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_pipex
 }	t_pipex;
 
 //exec.c
-void	ft_waitpid(t_pipex *pipex_data);
+int	ft_waitpid(t_pipex *pipex_data);
 void	exec(t_pipex *pipex_data);
 
 //path.c

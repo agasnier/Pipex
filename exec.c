@@ -6,29 +6,35 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:10:34 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 16:02:55 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 18:49:44 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_waitpid(t_pipex *pipex_data)
+int	ft_waitpid(t_pipex *pipex_data)
 {
 	int	i;
+	int	status;
+	int	return_code;
 
 	i = 0;
+	return_code = 0;
 	while (i < pipex_data->nb_cmds)
 	{
 		if (pipex_data->cmds[i].pid > 0)
-			waitpid(pipex_data->cmds[i].pid, NULL, 0);
+		{
+			waitpid(pipex_data->cmds[i].pid, &status, 0);
+			if (WIFEXITED(status))
+				return_code = WEXITSTATUS(status);
+		}
 		i++;
 	}
+	return (return_code);
 }
 
-static void	child_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
+static void	child_dup(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
 {
-	if (*fd_in == -1)
-		free_all(pipex_data, 1, "");
 	if (dup2(*fd_in, STDIN_FILENO) == -1)
 		free_all(pipex_data, 1, strerror(errno));
 	close(*fd_in);
@@ -46,11 +52,33 @@ static void	child_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
 	else
 		if (dup2(pipex_data->fd_out, STDOUT_FILENO) == -1)
 			free_all(pipex_data, 1, strerror(errno));
-	close(pipex_data->fd_in);
-	close(pipex_data->fd_out);
+}
+
+static void	child_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
+{
+	if (*fd_in == -1)
+	{
+		if (i < pipex_data->nb_cmds - 1)
+		{
+			close(pipe[0]);
+			close(pipe[1]);
+		}
+		free_all(pipex_data, 1, "");
+	}
+	child_dup(pipex_data, pipe, fd_in, i);
+	if (pipex_data->fd_in != -1)
+		close(pipex_data->fd_in);
+	if (pipex_data->fd_out != -1)
+		close(pipex_data->fd_out);
+	if (!pipex_data->cmds[i].path)
+	{
+		write(2, pipex_data->cmds[i].cmd[0],
+			ft_strlen(pipex_data->cmds[i].cmd[0]));
+		free_all(pipex_data, 127, ": command not found\n");
+	}
 	execve(pipex_data->cmds[i].path, pipex_data->cmds[i].cmd, pipex_data->envp);
-	perror("child_process");
-	free_all(pipex_data, 127, "");
+	perror(pipex_data->cmds[i].cmd[0]);
+	free_all(pipex_data, 126, "");
 }
 
 static void	parent_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
