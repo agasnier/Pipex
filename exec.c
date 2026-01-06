@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:10:34 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 15:45:03 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 16:02:55 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	ft_waitpid(t_pipex *pipex_data)
 
 static void	child_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
 {
+	if (*fd_in == -1)
+		free_all(pipex_data, 1, "");
 	if (dup2(*fd_in, STDIN_FILENO) == -1)
 		free_all(pipex_data, 1, strerror(errno));
 	close(*fd_in);
