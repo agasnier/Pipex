@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:51:26 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 11:55:14 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 12:47:12 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*find_exec(char *cmd, char **path)
 	char	*tmp2;
 
 	if (access(cmd, X_OK) == 0)
-		return (cmd);
+		return (strdup(cmd));
 	i = 0;
 	while (path && path[i])
 	{
