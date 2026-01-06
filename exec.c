@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:10:34 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 11:55:23 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 13:58:41 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	ft_waitpid(t_pipex *pipex_data)
 	i = 0;
 	while (i < pipex_data->nb_cmds)
 	{
-		waitpid(pipex_data->cmds[i].pid, NULL, 0);
+		if (pipex_data->cmds[i].pid > 0)
+			waitpid(pipex_data->cmds[i].pid, NULL, 0);
 		i++;
 	}
 }
