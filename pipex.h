@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:01:46 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/05 17:42:11 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 10:51:01 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	get_env_path(t_pipex *pipex_data, char *envp[]);
 char	**ft_split(char *str, char spliter);
 
 //utils.c
+int		strshr(const char *big, const char *little);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	open_fd(t_pipex *pipex_data, char *argv[]);
