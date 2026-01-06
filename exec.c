@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:10:34 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 13:58:41 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 14:08:41 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,23 @@ void	ft_waitpid(t_pipex *pipex_data)
 
 static void	child_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
 {
-	dup2(*fd_in, STDIN_FILENO);
+	if (dup2(*fd_in, STDIN_FILENO) == -1)
+		free_all(pipex_data, 1, strerror(errno));
 	close(*fd_in);
 	if (i < pipex_data->nb_cmds - 1)
 	{
-		dup2(pipe[1], STDOUT_FILENO);
+		if (dup2(pipe[1], STDOUT_FILENO) == -1)
+		{
+			close(pipe[0]);
+			close(pipe[1]);
+			free_all(pipex_data, 1, strerror(errno));
+		}
 		close(pipe[0]);
 		close(pipe[1]);
 	}
 	else
-		dup2(pipex_data->fd_out, STDOUT_FILENO);
+		if (dup2(pipex_data->fd_out, STDOUT_FILENO) == -1)
+			free_all(pipex_data, 1, strerror(errno));
 	close(pipex_data->fd_in);
 	close(pipex_data->fd_out);
 	execve(pipex_data->cmds[i].path, pipex_data->cmds[i].cmd, pipex_data->envp);
@@ -69,6 +76,8 @@ void	exec(t_pipex *pipex_data)
 			if (pipe(pipe_fd) == -1)
 				free_all(pipex_data, 1, strerror(errno));
 		pipex_data->cmds[i].pid = fork();
+		if (pipex_data->cmds[i].pid == -1)
+			free_all(pipex_data, 1, strerror(errno));
 		if (pipex_data->cmds[i].pid == 0)
 			child_process(pipex_data, pipe_fd, &fd_in, i);
 		else
