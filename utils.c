@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:29:49 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 12:47:59 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 14:15:53 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,6 @@ char	*ft_strdup(const char *s)
 		return (NULL);
 	ft_strlcpy(t, s, ft_strlen(s) + 1);
 	return (t);
-}
-
-int	strshr(const char *big, const char *little)
-{
-	int	i;
-	int	j;
-
-	if (!little)
-		return (0);
-	i = 0;
-	while (big[i])
-	{
-		j = 0;
-		while (big[i + j] && big[i + j] == little[j])
-			j++;
-		if (little[j] == '\0')
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 int	ft_strncmp(const char *s1, const char *s2)
