@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 17:10:30 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 11:35:31 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 11:40:30 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,12 @@ static void	ft_error(char *msg)
 	exit (1);
 }
 
-void	free_all(t_pipex *pipex_data, int exit, char *msg)
+void	free_all(t_pipex *pipex_data, int exit_err, char *msg)
 {
 	int	i;
 
 	if (pipex_data->path)
-	{
 		free_tab(pipex_data->path);
-		pipex_data->path = NULL;
-	}
 	if (pipex_data->cmds)
 	{
 		i = 0;
@@ -61,6 +58,6 @@ void	free_all(t_pipex *pipex_data, int exit, char *msg)
 		close(pipex_data->fd_in);
 	if (pipex_data->fd_out != -1)
 		close(pipex_data->fd_out);
-	if (exit)
+	if (exit_err)
 		ft_error(msg);
 }

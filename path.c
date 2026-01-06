@@ -6,13 +6,13 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:51:26 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 11:25:56 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 11:55:14 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*find_exec(char *cmd, char **path) //error ok
+static char	*find_exec(char *cmd, char **path)
 {
 	int		i;
 	char	*tmp;
@@ -86,4 +86,6 @@ void	get_env_path(t_pipex *pipex_data, char *envp[])
 	if (path == NULL)
 		free_all(pipex_data, 1, "Envpath not found.\n");
 	pipex_data->path = ft_split(path, ':');
+	if (!pipex_data->path)
+		free_all(pipex_data, 1, "Split path fail.\n");
 }
