@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 17:10:30 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 11:40:30 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 15:48:03 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ static void	free_tab(char **tab)
 	free(tab);
 }
 
-static void	ft_error(char *msg)
+static void	ft_error(int exit_err, char *msg)
 {
 	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	exit (1);
+	exit (exit_err);
 }
 
 void	free_all(t_pipex *pipex_data, int exit_err, char *msg)
@@ -58,6 +57,6 @@ void	free_all(t_pipex *pipex_data, int exit_err, char *msg)
 		close(pipex_data->fd_in);
 	if (pipex_data->fd_out != -1)
 		close(pipex_data->fd_out);
-	if (exit_err)
-		ft_error(msg);
+	if (exit_err >= 0)
+		ft_error(exit_err, msg);
 }

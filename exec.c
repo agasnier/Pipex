@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:10:34 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 14:08:41 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/06 15:45:03 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static void	child_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
 	close(pipex_data->fd_in);
 	close(pipex_data->fd_out);
 	execve(pipex_data->cmds[i].path, pipex_data->cmds[i].cmd, pipex_data->envp);
-	free_all(pipex_data, 1, strerror(errno));
-	exit(1);
+	perror("child_process");
+	free_all(pipex_data, 127, "");
 }
 
 static void	parent_process(t_pipex *pipex_data, int *pipe, int *fd_in, int i)
