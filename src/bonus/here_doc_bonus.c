@@ -6,12 +6,11 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:51:57 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 16:26:18 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:52:44 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-#include "get_next_line_bonus.h"
 
 char	*get_file_name(void)
 {

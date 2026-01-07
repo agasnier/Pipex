@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:29:49 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 16:27:21 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 17:05:30 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	check_args_here_doc(t_pipex *pipex_data, char *argv[])
 {
 	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")) == 0)
 	{
-		pipex_data->here_doc = 2;
+		pipex_data->here_doc = 1;
 		pipex_data->here_doc_limiter = argv[2];
 		pipex_data->here_doc_file = get_file_name();
 	}
