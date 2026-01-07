@@ -6,11 +6,27 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:29:49 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 14:53:54 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 15:04:04 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n == 0)
+		return (0);
+	while (i < n && (s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}
 
 void	open_fd(t_pipex *pipex_data, char *argv[])
 {
@@ -20,8 +36,10 @@ void	open_fd(t_pipex *pipex_data, char *argv[])
 		pipex_data->fd_in = open(argv[1], O_RDONLY);
 	if (pipex_data->fd_in < 0)
 		perror(argv[1]);
-	pipex_data->fd_out = open(argv[pipex_data->argc - 1],
-			O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (pipex_data->here_doc)
+		pipex_data->fd_out = open(argv[pipex_data->argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		pipex_data->fd_out = open(argv[pipex_data->argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipex_data->fd_out < 0)
 	{
 		if (pipex_data->fd_in > 0)

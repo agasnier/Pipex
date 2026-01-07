@@ -9,6 +9,7 @@ SRCS =	exec.c \
 		path.c \
 		split.c \
 		utils.c \
+		utils2.c \
 
 SRCS_BONUS =	get_next_line_utils.c \
 				get_next_line.c \
