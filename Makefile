@@ -7,8 +7,8 @@ MANDA_DIR = src/mandatory
 BONUS_DIR = src/bonus
 OBJ_DIR = obj
 
-INC_MANDA = include/mandatory
-INC_BONUS = include/bonus
+INC_MANDA_DIR = include/mandatory
+INC_BONUS_DIR = include/bonus
 
 SRCS =	$(MANDA_DIR)/exec.c \
 		$(MANDA_DIR)/free.c \
@@ -30,8 +30,12 @@ SRCS_BONUS =	$(BONUS_DIR)/exec_bonus.c \
 
 HEADER =	
 
-OBJS = $(patsubst $(MANDA_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
-OBJS_BONUS = $(patsubst $(BONUS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS_BONUS))
+OBJS = $(SRCS:$(MANDA_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS_BONUS = $(SRCS_BONUS:$(BONUS_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+HEADERS = $(INC_MANDA_DIR)/pipex.h
+HEADERS_BONUS =	$(INC_BONUS_DIR)/pipex_bonus.h \
+				$(INC_BONUS_DIR)/get_next_line_bonus.h \
 
 all: $(NAME)
 
@@ -59,19 +63,21 @@ bonus: .bonus $(OBJS_BONUS)
 	fi
 	@touch .bonus
 
-%.o: %.c $(HEADER)
-	@$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: $(MANDA_DIR)/%.c $(HEADER)
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -I$(INC_MANDA_DIR) -c $< -o $@
 	
-%_bonus.o: %.c $(HEADER)
-	@$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: $(BONUS_DIR)/%.c $(HEADERS_BONUS)
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -I$(INC_BONUS_DIR) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJS_DIR)
+	@rm -rf $(OBJ_DIR)
 	@rm -f .bonus .manda
 
 fclean: clean
 	@rm -rf $(NAME)
-	
+
 re: fclean all
 
 .PHONY: all clean fclean re bonus

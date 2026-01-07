@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 17:10:30 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 15:35:44 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:33:06 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,18 @@ void	free_all(t_pipex *pipex_data, int exit_err, char *msg)
 {
 	int	i;
 
-	if (pipex_data->path)
-		free_tab(pipex_data->path);
+	free_tab(pipex_data->path);
 	if (pipex_data->cmds)
 	{
 		i = 0;
 		while (i < pipex_data->nb_cmds)
 		{
-			if (pipex_data->cmds[i].cmd)
-				free_tab(pipex_data->cmds[i].cmd);
-			if (pipex_data->cmds[i].path)
-				free(pipex_data->cmds[i].path);
+			free_tab(pipex_data->cmds[i].cmd);
+			free(pipex_data->cmds[i].path);
 			i++;
 		}
 		free(pipex_data->cmds);
-		pipex_data->cmds = NULL;
-	}	
+	}
 	if (pipex_data->fd_in != -1)
 		close(pipex_data->fd_in);
 	if (pipex_data->fd_out != -1)

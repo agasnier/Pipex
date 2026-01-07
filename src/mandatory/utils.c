@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:29:49 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 12:51:44 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:15:28 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	check_args(t_pipex *pipex_data, int argc, char **envp)
 {
 	int	i;
 
-	if (argc == 5)
+	if (argc != 5)
 		free_all(pipex_data, 1, "Number of arguments must be 5.\n");
 	pipex_data->argc = argc;
 	pipex_data->nb_cmds = argc - 3;

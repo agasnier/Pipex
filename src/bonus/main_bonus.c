@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 14:21:22 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 15:35:04 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:26:46 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	pipex_struct_init(t_pipex *pipex_data)
 	pipex_data->cmds = NULL;
 	pipex_data->nb_cmds = 0;
 	pipex_data->here_doc = 0;
-	pipex_data->here_doc_limiter = NULL;	
-	pipex_data->here_doc_file = NULL;		
+	pipex_data->here_doc_limiter = NULL;
+	pipex_data->here_doc_file = NULL;
 }
 
 int	main(int argc, char *argv[], char *envp[])

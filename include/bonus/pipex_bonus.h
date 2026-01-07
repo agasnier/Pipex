@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:01:46 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 15:34:18 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:27:44 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdio.h>
 # include <errno.h>
 # include <string.h>
-#include "get_next_line_bonus.h"
+# include "get_next_line_bonus.h"
 
 typedef struct s_cmd
 {

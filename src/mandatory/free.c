@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 17:10:30 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 15:48:03 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:31:15 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	free_all(t_pipex *pipex_data, int exit_err, char *msg)
 			i++;
 		}
 		free(pipex_data->cmds);
-		pipex_data->cmds = NULL;
 	}
 	if (pipex_data->fd_in != -1)
 		close(pipex_data->fd_in);
