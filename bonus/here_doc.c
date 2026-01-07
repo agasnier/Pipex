@@ -6,20 +6,14 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:51:57 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 12:24:19 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 12:59:52 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include "get_next_line.h"
-
-#include "../pipex.h"
-
-#include <stdio.h>
+#include "pipex.h"
 
 
-
-static int	ft_strncmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	unsigned int	i;
 
@@ -34,7 +28,7 @@ static int	ft_strncmp(const char *s1, const char *s2)
 }
 
 
-static char *get_file_name(void)
+char *get_file_name(void)
 {
 	int		i;
 	char	*name;
@@ -58,7 +52,7 @@ static char *get_file_name(void)
 }
 
 
-int	main(void)
+void here_doc(t_pipex *pipex_data, char *limiter)
 {
 	int		fd;
 	char	*line;
@@ -68,17 +62,15 @@ int	main(void)
 	
 	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-	{
-		perror("here_doc");
-		return (1);
-	}
+		free_all(pipex_data, 1, "Heredoc error");
 	
 	while (1)
 	{
+		write(1, "heredoc> ", 9);
 		line = get_next_line(0);
 		if (!line)
 			break ;
-		if (ft_strncmp(line, "STOP\n") == 0)
+		if (ft_strcmp(line, "STOP\n") == 0)
 		{
 			free(line);
 			break ;
