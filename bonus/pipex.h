@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:01:46 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 12:59:42 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:53:01 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ void	open_fd(t_pipex *pipex_data, char *argv[]);
 void	check_args(t_pipex *pipex_data, int argc, char *argv[], char **envp);
 
 //utils2.c
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strdup(const char *s);
 
 //free.c
 void	free_all(t_pipex *pipex_data, int exit_err, char *msg);
 
 //here_doc.c
-int		ft_strcmp(const char *s1, const char *s2);
 char	*get_file_name(void);
-void	here_doc(t_pipex *pipex_data, char *limiter);
+void	here_doc(t_pipex *pipex_data);
 
 #endif

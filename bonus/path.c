@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 21:51:26 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/06 18:41:38 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:33:54 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	find_path(t_pipex *pipex_data)
 	int	arg;
 	int	cmds;
 
-	arg = 2;
+	arg = 2 + pipex_data->here_doc;
 	cmds = 0;
 	while (arg < pipex_data->argc - 1)
 	{
@@ -57,7 +57,7 @@ void	get_cmd_args(t_pipex *pipex_data, char *argv[])
 	int	arg;
 	int	cmds;
 
-	arg = 2;
+	arg = 2 + pipex_data->here_doc;
 	cmds = 0;
 	while (arg < pipex_data->argc - 1)
 	{

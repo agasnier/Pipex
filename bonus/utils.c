@@ -6,49 +6,18 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 15:29:49 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 12:57:05 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:53:54 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	size_t	len;
-	char	*t;
-	size_t	i;
-	size_t	j;
-
-	if (!s1 || !s2)
-		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	t = malloc(sizeof(char) * (len + 1));
-	if (!t)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[j])
-		t[i++] = s1[j++];
-	j = 0;
-	while (s2[j])
-		t[i++] = s2[j++];
-	t[i] = '\0';
-	return (t);
-}
-
 void	open_fd(t_pipex *pipex_data, char *argv[])
 {
-	pipex_data->fd_in = open(argv[1], O_RDONLY);
+	if (pipex_data->here_doc_file)
+		pipex_data->fd_in = open(pipex_data->here_doc_file, O_RDONLY);
+	else
+		pipex_data->fd_in = open(argv[1], O_RDONLY);
 	if (pipex_data->fd_in < 0)
 		perror(argv[1]);
 	pipex_data->fd_out = open(argv[pipex_data->argc - 1],
@@ -64,7 +33,7 @@ void	open_fd(t_pipex *pipex_data, char *argv[])
 
 static void	check_args_here_doc(t_pipex *pipex_data, char *argv[])
 {
-	if (ft_strcmp(argv[1], "here_doc") == 0)
+	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")) == 0)
 	{
 		pipex_data->here_doc = 2;
 		pipex_data->here_doc_limiter = argv[2];
@@ -80,7 +49,7 @@ void	check_args(t_pipex *pipex_data, int argc, char *argv[], char **envp)
 		free_all(pipex_data, 1, "Number of arguments must be 5 minimum.\n");
 	check_args_here_doc(pipex_data, argv);
 	pipex_data->argc = argc;
-	pipex_data->nb_cmds = argc - 3;
+	pipex_data->nb_cmds = argc - 3 - pipex_data->here_doc;
 	pipex_data->envp = envp;
 	pipex_data->cmds = malloc(sizeof(t_cmd) * (pipex_data->nb_cmds));
 	if (pipex_data->cmds == NULL)

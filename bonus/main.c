@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 14:21:22 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 13:00:53 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:30:05 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(int argc, char *argv[], char *envp[])
 
 	pipex_struct_init(&pipex_data);
 	check_args(&pipex_data, argc, argv, envp);
+	if (pipex_data.here_doc)
+		here_doc(&pipex_data);
 	open_fd(&pipex_data, argv);
 	get_env_path(&pipex_data, envp);
 	get_cmd_args(&pipex_data, argv);
