@@ -3,19 +3,35 @@ NAME = pipex
 CC = cc
 CFLAGS = -Werror -Wall -Wextra -g
 
-SRCS =	exec.c \
-		free.c \
-		main.c \
-		path.c \
-		split.c \
-		utils.c \
+MANDA_DIR = src/mandatory
+BONUS_DIR = src/bonus
+OBJ_DIR = obj
 
-SRCS_BONUS =	
+INC_MANDA = include/mandatory
+INC_BONUS = include/bonus
+
+SRCS =	$(MANDA_DIR)/exec.c \
+		$(MANDA_DIR)/free.c \
+		$(MANDA_DIR)/main.c \
+		$(MANDA_DIR)/path.c \
+		$(MANDA_DIR)/split.c \
+		$(MANDA_DIR)/utils.c \
+		$(MANDA_DIR)/utils2.c \
+
+SRCS_BONUS =	$(BONUS_DIR)/exec_bonus.c \
+				$(BONUS_DIR)/free_bonus.c \
+				$(BONUS_DIR)/get_next_line_bonus.c \
+				$(BONUS_DIR)/get_next_line_utils_bonus.c \
+				$(BONUS_DIR)/here_doc_bonus.c \
+				$(BONUS_DIR)/main_bonus.c \
+				$(BONUS_DIR)/path_bonus.c \
+				$(BONUS_DIR)/split_bonus.c \
+				$(BONUS_DIR)/utils_bonus.c \
 
 HEADER =	
 
-OBJS = $(SRCS:.c=.o)
-OBJS_BONUS = $(SRCS:.c=_bonus.o) $(SRCS_BONUS:.c=_bonus.o)
+OBJS = $(patsubst $(MANDA_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+OBJS_BONUS = $(patsubst $(BONUS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS_BONUS))
 
 all: $(NAME)
 
@@ -50,11 +66,12 @@ bonus: .bonus $(OBJS_BONUS)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJS) $(OBJS_BONUS)
+	@rm -rf $(OBJS_DIR)
 	@rm -f .bonus .manda
 
 fclean: clean
 	@rm -rf $(NAME)
+	
 re: fclean all
 
 .PHONY: all clean fclean re bonus

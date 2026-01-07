@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc.c                                         :+:      :+:    :+:   */
+/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:51:57 by algasnie          #+#    #+#             */
-/*   Updated: 2026/01/07 14:47:57 by algasnie         ###   ########.fr       */
+/*   Updated: 2026/01/07 15:35:07 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-#include "get_next_line.h"
+#include "pipex_bonus.h"
+#include "get_next_line_bonus.h"
 
 char *get_file_name(void)
 {
